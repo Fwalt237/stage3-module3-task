@@ -34,14 +34,14 @@ public class TagService implements BaseService<TagDtoRequest, TagDtoResponse, Lo
 
     @Override
     @Transactional(readOnly = true)
-    public List<TagDtoResponse> findAll() {
-        return tagMapper.modelListToDtoList(tagRepository.findAll());
+    public List<TagDtoResponse> readAll() {
+        return tagMapper.modelListToDtoList(tagRepository.readAll());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public TagDtoResponse findById(Long id) {
-        return tagRepository.findById(id).map(tagMapper::modelToDto)
+    public TagDtoResponse readById(Long id) {
+        return tagRepository.readById(id).map(tagMapper::modelToDto)
                 .orElseThrow(
                     () -> new NotFoundException(String.format(TAG_ID_DOES_NOT_EXIST.getMessage(), id)));
 
@@ -57,7 +57,7 @@ public class TagService implements BaseService<TagDtoRequest, TagDtoResponse, Lo
     @Override
     @Transactional
     public TagDtoResponse update(@Valid TagDtoRequest updateRequest) {
-        if(tagRepository.findById(updateRequest.tagId()).isPresent()) {
+        if(tagRepository.readById(updateRequest.tagId()).isPresent()) {
            Tag tag = tagRepository.update(tagMapper.dtoToModel(updateRequest));
            return tagMapper.modelToDto(tag);
         }else{
@@ -68,7 +68,7 @@ public class TagService implements BaseService<TagDtoRequest, TagDtoResponse, Lo
     @Override
     @Transactional
     public boolean deleteById(Long id) {
-        if(tagRepository.findById(id).isPresent()) {
+        if(tagRepository.readById(id).isPresent()) {
             return tagRepository.deleteById(id);
         }else{
             throw new NotFoundException(String.format(TAG_ID_DOES_NOT_EXIST.getMessage(), id));
@@ -77,7 +77,7 @@ public class TagService implements BaseService<TagDtoRequest, TagDtoResponse, Lo
 
     @Transactional(readOnly = true)
     public List<TagDtoResponse> findTagsByNewsId(Long id) {
-        if(newsRepository.findById(id).isPresent()) {
+        if(newsRepository.readById(id).isPresent()) {
             List<Tag> tags = tagRepository.findTagsByNewsId(id);
             return tagMapper.modelListToDtoList(tags);
         }else{

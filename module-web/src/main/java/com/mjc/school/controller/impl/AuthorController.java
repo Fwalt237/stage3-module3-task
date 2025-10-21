@@ -24,14 +24,14 @@ public class AuthorController implements BaseController<AuthorDtoRequest, Author
 
     @Override
     @CommandHandler(operation = 7)
-    public List<AuthorDtoResponse> findAll() {
-        return authorService.findAll();
+    public List<AuthorDtoResponse> readAll() {
+        return authorService.readAll();
     }
 
     @Override
     @CommandHandler(operation = 8)
-    public AuthorDtoResponse findById(@CommandParam(name ="id") Long id) {
-        return authorService.findById(id);
+    public AuthorDtoResponse readById(@CommandParam(name ="id") Long id) {
+        return authorService.readById(id);
     }
 
     @Override

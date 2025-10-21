@@ -24,14 +24,14 @@ public class NewsController implements BaseController<NewsDtoRequest, NewsDtoRes
 
     @Override
     @CommandHandler(operation = 1)
-    public List<NewsDtoResponse> findAll() {
-        return newsService.findAll();
+    public List<NewsDtoResponse> readAll() {
+        return newsService.readAll();
     }
 
     @Override
     @CommandHandler(operation = 2)
-    public NewsDtoResponse findById(@CommandParam(name="id") Long id) {
-        return newsService.findById(id);
+    public NewsDtoResponse readById(@CommandParam(name="id") Long id) {
+        return newsService.readById(id);
     }
 
     @Override

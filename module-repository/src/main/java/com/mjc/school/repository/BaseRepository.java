@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface BaseRepository<T extends BaseEntity<K>, K>{
 
-    List<T> findAll();
+    List<T> readAll();
 
-    Optional<T> findById(K id);
+    Optional<T> readById(K id);
 
     T create(T entity);
 

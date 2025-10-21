@@ -35,14 +35,14 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
 
     @Override
     @Transactional(readOnly = true)
-    public List<NewsDtoResponse> findAll() {
-        return newsMapper.modelListToDtoList(newsRepository.findAll());
+    public List<NewsDtoResponse> readAll() {
+        return newsMapper.modelListToDtoList(newsRepository.readAll());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public NewsDtoResponse findById(Long id) {
-        return newsRepository.findById(id).map(newsMapper::modelToDto)
+    public NewsDtoResponse readById(Long id) {
+        return newsRepository.readById(id).map(newsMapper::modelToDto)
                 .orElseThrow(
                     () -> new NotFoundException(String.format(NEWS_ID_DOES_NOT_EXIST.getMessage(), id))
                 );
@@ -58,7 +58,7 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
     @Override
     @Transactional
     public NewsDtoResponse update(@Valid NewsDtoRequest updateRequest) {
-        if(newsRepository.findById(updateRequest.newsId()).isPresent()) {
+        if(newsRepository.readById(updateRequest.newsId()).isPresent()) {
             News news = newsRepository.update(newsMapper.dtoToModel(updateRequest, authorRepository, tagRepository));
             return newsMapper.modelToDto(news);
         }else{
@@ -69,7 +69,7 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
     @Override
     @Transactional
     public boolean deleteById(Long id) {
-        if(newsRepository.findById(id).isPresent()) {
+        if(newsRepository.readById(id).isPresent()) {
             return newsRepository.deleteById(id);
         }else{
             throw new NotFoundException(String.format(NEWS_ID_DOES_NOT_EXIST.getMessage(), id));

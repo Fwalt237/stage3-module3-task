@@ -34,14 +34,14 @@ public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoRes
 
     @Override
     @Transactional(readOnly = true)
-    public List<AuthorDtoResponse> findAll() {
-        return authorMapper.modelListToDtoList(authorRepository.findAll());
+    public List<AuthorDtoResponse> readAll() {
+        return authorMapper.modelListToDtoList(authorRepository.readAll());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public AuthorDtoResponse findById(Long id) {
-        return authorRepository.findById(id)
+    public AuthorDtoResponse readById(Long id) {
+        return authorRepository.readById(id)
                 .map(authorMapper::modelToDto)
                 .orElseThrow(
                         () -> new NotFoundException(String
@@ -58,7 +58,7 @@ public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoRes
     @Override
     @Transactional
     public AuthorDtoResponse update(@Valid AuthorDtoRequest updateRequest) {
-        if(authorRepository.findById(updateRequest.authorId()).isPresent()){
+        if(authorRepository.readById(updateRequest.authorId()).isPresent()){
             Author author = authorRepository.update(authorMapper.dtoToModel(updateRequest));
             return authorMapper.modelToDto(author);
         }else {
@@ -69,7 +69,7 @@ public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoRes
     @Override
     @Transactional
     public boolean deleteById(Long id) {
-        if(authorRepository.findById(id).isPresent()){
+        if(authorRepository.readById(id).isPresent()){
             return authorRepository.deleteById(id);
         }else {
             throw new NotFoundException(String.format(AUTHOR_ID_DOES_NOT_EXIST.getMessage(), id));
@@ -78,7 +78,7 @@ public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoRes
 
     @Transactional(readOnly = true)
     public AuthorDtoResponse findAuthorByNewsId(Long id){
-        if(newsRepository.findById(id).isPresent()){
+        if(newsRepository.readById(id).isPresent()){
             Author author = authorRepository.findAuthorByNewsId(id);
             return authorMapper.modelToDto(author);
         } else {

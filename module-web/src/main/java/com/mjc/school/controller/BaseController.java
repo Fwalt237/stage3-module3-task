@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface BaseController<T, R, K> {
 
-    List<R> findAll();
+    List<R> readAll();
 
-    R findById(K id);
+    R readById(K id);
 
     R create(T createRequest);
 

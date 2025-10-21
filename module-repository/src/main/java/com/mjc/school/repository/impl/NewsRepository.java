@@ -24,7 +24,7 @@ public class NewsRepository implements BaseRepository<News,Long> {
 
     @Override
     @Transactional(readOnly = true)
-    public List<News> findAll() {
+    public List<News> readAll() {
         try{
             TypedQuery<News> query = entityManager.createQuery("SELECT n FROM News n", News.class);
             query.setHint("org.hibernate.cacheable", Boolean.TRUE);
@@ -36,7 +36,7 @@ public class NewsRepository implements BaseRepository<News,Long> {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<News> findById(Long id) {
+    public Optional<News> readById(Long id) {
         try{
             return Optional.ofNullable(entityManager.find(News.class, id));
         }catch(Exception e){

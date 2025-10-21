@@ -35,7 +35,7 @@ public interface NewsMapper {
 
     @Named("mapAuthorIdToAuthor")
     default Author mapAuthorIdToAuthor(Long authorId, @Context AuthorRepository authorRepository) {
-        return authorId != null ? authorRepository.findById(authorId).orElse(null) : null;
+        return authorId != null ? authorRepository.readById(authorId).orElse(null) : null;
     }
 
     @Named("mapTagIdsToTags")
@@ -43,7 +43,7 @@ public interface NewsMapper {
         if(tagIds == null || tagIds.isEmpty()) {
             return new HashSet<>();
         }
-        return tagIds.stream().map(id->tagRepository.findById(id).orElse(null))
+        return tagIds.stream().map(id->tagRepository.readById(id).orElse(null))
         .filter(Objects::nonNull).collect(Collectors.toSet());
     }
 }

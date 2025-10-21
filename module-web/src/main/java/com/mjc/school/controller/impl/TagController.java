@@ -24,14 +24,14 @@ public class TagController implements BaseController<TagDtoRequest, TagDtoRespon
 
     @Override
     @CommandHandler(operation = 13)
-    public List<TagDtoResponse> findAll() {
-        return tagService.findAll();
+    public List<TagDtoResponse> readAll() {
+        return tagService.readAll();
     }
 
     @Override
     @CommandHandler(operation = 14)
-    public TagDtoResponse findById(@CommandParam(name="id") Long id) {
-        return tagService.findById(id);
+    public TagDtoResponse readById(@CommandParam(name="id") Long id) {
+        return tagService.readById(id);
     }
 
     @Override

@@ -19,7 +19,7 @@ public class TagRepository implements BaseRepository<Tag,Long> {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Tag> findAll() {
+    public List<Tag> readAll() {
         try{
             TypedQuery<Tag> query = entityManager.createQuery("SELECT t FROM Tag t", Tag.class);
             query.setHint("org.hibernate.cacheable", Boolean.TRUE);
@@ -31,7 +31,7 @@ public class TagRepository implements BaseRepository<Tag,Long> {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Tag> findById(Long id) {
+    public Optional<Tag> readById(Long id) {
         try{
             return Optional.ofNullable(entityManager.find(Tag.class, id));
         }catch(Exception e){

@@ -19,7 +19,7 @@ public class AuthorRepository implements BaseRepository<Author,Long> {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Author> findAll() {
+    public List<Author> readAll() {
         try{
             TypedQuery<Author> query = entityManager.createQuery("SELECT a FROM Author a", Author.class);
             query.setHint("org.hibernate.cacheable", Boolean.TRUE);
@@ -31,7 +31,7 @@ public class AuthorRepository implements BaseRepository<Author,Long> {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Author> findById(Long id) {
+    public Optional<Author> readById(Long id) {
         try{
             return Optional.ofNullable(entityManager.find(Author.class, id));
         } catch (Exception e) {
