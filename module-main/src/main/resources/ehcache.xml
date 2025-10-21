@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config
+        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xmlns='http://www.ehcache.org/v3'
+        xsi:schemaLocation="http://www.ehcache.org/v3 https://www.ehcache.org/schema/ehcache-core.xsd">
+
+    <cache alias="com.mjc.school.repository.model.Author">
+        <expiry>
+            <ttl>900</ttl>
+        </expiry>
+        <heap>100</heap>
+    </cache>
+    <cache alias="com.mjc.school.repository.model.News">
+        <expiry>
+            <ttl>1800</ttl>
+        </expiry>
+        <heap>200</heap>
+    </cache>
+    <cache alias="com.mjc.school.repository.model.Tag">
+        <expiry>
+            <ttl>900</ttl>
+        </expiry>
+        <heap>50</heap>
+    </cache>
+    <cache alias="com.mjc.school.repository.model.Author.newsFromAuthor">
+        <expiry>
+            <ttl>1800</ttl>
+        </expiry>
+        <heap>100</heap>
+    </cache>
+    <cache alias="com.mjc.school.repository.model.Tag.newsFromTag">
+        <expiry>
+            <ttl>1800</ttl>
+        </expiry>
+        <heap>100</heap>
+    </cache>
+    <cache alias="com.mjc.school.repository.model.News.tagsFromNews">
+        <expiry>
+            <ttl>900</ttl>
+        </expiry>
+        <heap>100</heap>
+    </cache>
+    <cache alias="org.hibernate.cache.internal.StandardQueryCache">
+        <expiry>
+            <ttl>1800</ttl>
+        </expiry>
+        <heap>1000</heap>
+    </cache>
+    <cache alias="org.hibernate.cache.internal.UpdateTimestampsCache">
+        <expiry>
+            <ttl>1800</ttl>
+        </expiry>
+        <heap>1000</heap>
+    </cache>
+
+</config>

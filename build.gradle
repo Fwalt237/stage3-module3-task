@@ -1,0 +1,51 @@
+plugins{
+    id 'org.springframework.boot' version '2.7.7' apply false
+    id 'io.spring.dependency-management' version '1.1.6' apply false
+    id 'java'
+}
+
+subprojects{
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+
+    dependencies {
+        // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter
+        implementation 'org.springframework.boot:spring-boot-starter:2.7.7'
+
+        // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.7'
+
+        // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop
+        implementation 'org.springframework.boot:spring-boot-starter-aop:2.7.7'
+
+        // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-cache
+        implementation 'org.springframework.boot:spring-boot-starter-cache:2.7.7'
+
+        // https://mvnrepository.com/artifact/org.ehcache/ehcache
+        implementation 'org.ehcache:ehcache:3.9.9'
+
+        // https://mvnrepository.com/artifact/org.hibernate/hibernate-jcache
+        implementation 'org.hibernate:hibernate-jcache:5.6.14.Final'
+
+        // https://mvnrepository.com/artifact/javax.cache/cache-api
+        implementation 'javax.cache:cache-api:1.0.0'
+
+        // https://mvnrepository.com/artifact/org.projectlombok/lombok
+        implementation 'org.projectlombok:lombok:1.18.24'
+        annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+        testImplementation "com.tngtech.archunit:archunit-junit5:1.0.0"
+
+    }
+}
