@@ -18,6 +18,14 @@ subprojects{
         mavenCentral()
     }
 
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+
+
 
     dependencies {
         // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter
