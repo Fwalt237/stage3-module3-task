@@ -1,6 +1,7 @@
 package com.mjc.school.service;
 
 
+import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.impl.AuthorRepository;
 import com.mjc.school.repository.impl.TagRepository;
 import com.mjc.school.repository.model.Author;
@@ -31,15 +32,15 @@ public interface NewsMapper {
     @Mapping(target = "tagsFromNews", source = "tagIds", qualifiedByName = "mapTagIdsToTags")
     @Mapping(target = "createDate", ignore = true)
     @Mapping(target = "lastUpdateTime", ignore = true)
-    News dtoToModel(NewsDtoRequest dto, @Context AuthorRepository authorRepository, @Context TagRepository tagRepository);
+    News dtoToModel(NewsDtoRequest dto, @Context BaseRepository<Author,Long> authorRepository, @Context BaseRepository<Tag,Long> tagRepository);
 
     @Named("mapAuthorIdToAuthor")
-    default Author mapAuthorIdToAuthor(Long authorId, @Context AuthorRepository authorRepository) {
+    default Author mapAuthorIdToAuthor(Long authorId, @Context BaseRepository<Author,Long> authorRepository) {
         return authorId != null ? authorRepository.readById(authorId).orElse(null) : null;
     }
 
     @Named("mapTagIdsToTags")
-    default Set<Tag> mapTagIdsToTags(Set<Long> tagIds, @Context TagRepository tagRepository) {
+    default Set<Tag> mapTagIdsToTags(Set<Long> tagIds, @Context BaseRepository<Tag,Long> tagRepository) {
         if(tagIds == null || tagIds.isEmpty()) {
             return new HashSet<>();
         }
