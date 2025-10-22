@@ -1,8 +1,6 @@
 package com.mjc.school.repository.model;
 
 import lombok.Data;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,7 +13,6 @@ import java.util.List;
 @Entity
 @Data
 @EntityListeners(AuditingEntityListener.class)
-@Cache(usage= CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Author implements BaseEntity<Long>{
 
     @Id
@@ -34,7 +31,6 @@ public class Author implements BaseEntity<Long>{
     private LocalDateTime lastUpdateTime;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    @Cache(usage= CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private List<News> newsFromAuthor = new ArrayList<>();
 
     @Override

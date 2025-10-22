@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Scanner;
@@ -23,6 +24,7 @@ import java.util.Scanner;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableJpaAuditing
 @EntityScan(basePackages ="com.mjc.school.repository.model")
+@EnableJpaRepositories(basePackages = "com.mjc.school.repository")
 @EnableCaching
 @EnableTransactionManagement
 public class ModuleMainApplication {

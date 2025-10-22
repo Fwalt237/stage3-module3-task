@@ -3,7 +3,6 @@ package com.mjc.school.repository.impl;
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.Tag;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,7 +17,6 @@ public class TagRepository implements BaseRepository<Tag,Long> {
     private EntityManager entityManager;
 
     @Override
-    @Transactional(readOnly = true)
     public List<Tag> readAll() {
         try{
             TypedQuery<Tag> query = entityManager.createQuery("SELECT t FROM Tag t", Tag.class);
@@ -30,7 +28,6 @@ public class TagRepository implements BaseRepository<Tag,Long> {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<Tag> readById(Long id) {
         try{
             return Optional.ofNullable(entityManager.find(Tag.class, id));
@@ -40,7 +37,6 @@ public class TagRepository implements BaseRepository<Tag,Long> {
     }
 
     @Override
-    @Transactional
     public Tag create(Tag entity) {
         try{
             entityManager.persist(entity);
@@ -51,7 +47,6 @@ public class TagRepository implements BaseRepository<Tag,Long> {
     }
 
     @Override
-    @Transactional
     public Tag update(Tag entity) {
         try{
             entityManager.merge(entity);
@@ -62,7 +57,6 @@ public class TagRepository implements BaseRepository<Tag,Long> {
     }
 
     @Override
-    @Transactional
     public boolean deleteById(Long id) {
         try{
             Tag tag = entityManager.find(Tag.class, id);
@@ -76,7 +70,6 @@ public class TagRepository implements BaseRepository<Tag,Long> {
         }
     }
 
-    @Transactional(readOnly = true)
     public List<Tag> findTagsByNewsId(Long newsId) {
         String jpql = "SELECT t FROM News n JOIN n.tagsFromNews t WHERE n.newsId = :newsId";
         TypedQuery<Tag> query = entityManager.createQuery(jpql, Tag.class)

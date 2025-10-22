@@ -1,8 +1,6 @@
 package com.mjc.school.repository.model;
 
 import lombok.Data;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,7 +13,6 @@ import java.util.Set;
 @Entity
 @Data
 @EntityListeners(AuditingEntityListener.class)
-@Cache(usage= CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class News implements BaseEntity<Long>{
 
     @Id
@@ -44,7 +41,6 @@ public class News implements BaseEntity<Long>{
     @JoinTable(name="NEWS_TAG",
     joinColumns = @JoinColumn(name="NEWS_ID"),
     inverseJoinColumns = @JoinColumn(name="TAG_ID"))
-    @Cache(usage= CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Tag> tagsFromNews = new HashSet<>();
 
     @Override

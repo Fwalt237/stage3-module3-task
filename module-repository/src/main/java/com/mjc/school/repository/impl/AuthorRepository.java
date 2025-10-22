@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +17,6 @@ public class AuthorRepository implements BaseRepository<Author,Long> {
     private EntityManager entityManager;
 
     @Override
-    @Transactional(readOnly = true)
     public List<Author> readAll() {
         try{
             TypedQuery<Author> query = entityManager.createQuery("SELECT a FROM Author a", Author.class);
@@ -30,7 +28,6 @@ public class AuthorRepository implements BaseRepository<Author,Long> {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<Author> readById(Long id) {
         try{
             return Optional.ofNullable(entityManager.find(Author.class, id));
@@ -40,7 +37,6 @@ public class AuthorRepository implements BaseRepository<Author,Long> {
     }
 
     @Override
-    @Transactional
     public Author create(Author entity) {
         try{
             entityManager.persist(entity);
@@ -51,7 +47,6 @@ public class AuthorRepository implements BaseRepository<Author,Long> {
     }
 
     @Override
-    @Transactional
     public Author update(Author entity) {
         try{
             entityManager.merge(entity);
@@ -62,7 +57,6 @@ public class AuthorRepository implements BaseRepository<Author,Long> {
     }
 
     @Override
-    @Transactional
     public boolean deleteById(Long id) {
         try {
             Author author = entityManager.find(Author.class, id);
@@ -76,7 +70,6 @@ public class AuthorRepository implements BaseRepository<Author,Long> {
         }
     }
 
-    @Transactional(readOnly = true)
     public Author findAuthorByNewsId(Long newsId) {
         String jpql = "SELECT n.author FROM News n WHERE n.newsId = :newsId";
         TypedQuery<Author> query = entityManager.createQuery(jpql, Author.class)

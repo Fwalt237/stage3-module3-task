@@ -5,7 +5,6 @@ import com.mjc.school.repository.model.Author;
 import com.mjc.school.repository.model.News;
 import com.mjc.school.repository.model.Tag;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
@@ -23,7 +22,6 @@ public class NewsRepository implements BaseRepository<News,Long> {
     private EntityManager entityManager;
 
     @Override
-    @Transactional(readOnly = true)
     public List<News> readAll() {
         try{
             TypedQuery<News> query = entityManager.createQuery("SELECT n FROM News n", News.class);
@@ -35,7 +33,6 @@ public class NewsRepository implements BaseRepository<News,Long> {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<News> readById(Long id) {
         try{
             return Optional.ofNullable(entityManager.find(News.class, id));
@@ -45,7 +42,6 @@ public class NewsRepository implements BaseRepository<News,Long> {
     }
 
     @Override
-    @Transactional
     public News create(News entity) {
         try{
             entityManager.persist(entity);
@@ -56,7 +52,6 @@ public class NewsRepository implements BaseRepository<News,Long> {
     }
 
     @Override
-    @Transactional
     public News update(News entity) {
         try{
             entityManager.merge(entity);
@@ -67,7 +62,6 @@ public class NewsRepository implements BaseRepository<News,Long> {
     }
 
     @Override
-    @Transactional
     public boolean deleteById(Long id) {
         try{
             News news = entityManager.find(News.class, id);
@@ -81,7 +75,6 @@ public class NewsRepository implements BaseRepository<News,Long> {
         }
     }
 
-    @Transactional(readOnly = true)
     public List<News> findNewsByParams(List<String> tagNames, List<Long> tagIds,
                                        String authorName, String title, String content) {
 

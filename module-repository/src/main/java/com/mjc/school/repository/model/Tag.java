@@ -1,8 +1,6 @@
 package com.mjc.school.repository.model;
 
 import lombok.Data;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,7 +8,6 @@ import java.util.Set;
 
 @Entity
 @Data
-@Cache(usage= CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Tag implements BaseEntity<Long> {
 
     @Id
@@ -21,7 +18,6 @@ public class Tag implements BaseEntity<Long> {
     private String name;
 
     @ManyToMany(mappedBy = "tagsFromNews")
-    @Cache(usage= CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<News> newsFromTag = new HashSet<>();
 
     @Override
