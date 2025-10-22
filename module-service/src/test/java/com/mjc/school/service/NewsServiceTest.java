@@ -1,8 +1,8 @@
 package com.mjc.school.service;
 
-import com.mjc.school.repository.impl.AuthorRepository;
-import com.mjc.school.repository.impl.NewsRepository;
-import com.mjc.school.repository.impl.TagRepository;
+import com.mjc.school.repository.impl.AuthorRepositoryImpl;
+import com.mjc.school.repository.impl.NewsRepositoryImpl;
+import com.mjc.school.repository.impl.TagRepositoryImpl;
 import com.mjc.school.repository.model.Author;
 import com.mjc.school.repository.model.News;
 import com.mjc.school.repository.model.Tag;
@@ -13,7 +13,6 @@ import com.mjc.school.service.exceptions.NotFoundException;
 import com.mjc.school.service.impl.NewsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +27,9 @@ class NewsServiceTest {
 
 
     private NewsService newsService;
-    private  NewsRepository newsRepository;
-    private AuthorRepository authorRepository;
-    private TagRepository tagRepository;
+    private NewsRepositoryImpl newsRepositoryImpl;
+    private AuthorRepositoryImpl authorRepositoryImpl;
+    private TagRepositoryImpl tagRepositoryImpl;
 
     private Author testAuthor;
     private Tag testTag;
@@ -41,18 +40,18 @@ class NewsServiceTest {
     void setUp() {
         testAuthor = new Author();
         testAuthor.setName("John Doe");
-        testAuthor = authorRepository.create(testAuthor);
+        testAuthor = authorRepositoryImpl.create(testAuthor);
 
         testTag = new Tag();
         testTag.setName("Tech");
-        testTag = tagRepository.create(testTag);
+        testTag = tagRepositoryImpl.create(testTag);
 
         testNews = new News();
         testNews.setTitle("Test News");
         testNews.setContent("Content");
         testNews.setAuthor(testAuthor);
         testNews.setTagsFromNews(Set.of(testTag));
-        testNews = newsRepository.create(testNews);
+        testNews = newsRepositoryImpl.create(testNews);
     }
 
     @Test
@@ -99,7 +98,7 @@ class NewsServiceTest {
     void testDeleteById() {
         boolean deleted = newsService.deleteById(testNews.getId());
         assertThat(deleted).isTrue();
-        assertThat(newsRepository.readById(testNews.getId())).isEmpty();
+        assertThat(newsRepositoryImpl.readById(testNews.getId())).isEmpty();
     }
 
     @Test

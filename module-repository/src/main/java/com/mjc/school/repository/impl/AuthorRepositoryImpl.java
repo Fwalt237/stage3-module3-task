@@ -1,6 +1,6 @@
 package com.mjc.school.repository.impl;
 
-import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.AuthorRepository;
 import com.mjc.school.repository.model.Author;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class AuthorRepository implements BaseRepository<Author,Long> {
+public class AuthorRepositoryImpl implements AuthorRepository {
 
     @PersistenceContext
     private EntityManager entityManager;

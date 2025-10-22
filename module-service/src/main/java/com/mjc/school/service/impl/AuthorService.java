@@ -1,7 +1,7 @@
 package com.mjc.school.service.impl;
 
+import com.mjc.school.repository.AuthorRepository;
 import com.mjc.school.repository.BaseRepository;
-import com.mjc.school.repository.impl.AuthorRepository;
 import com.mjc.school.repository.model.Author;
 import com.mjc.school.repository.model.News;
 import com.mjc.school.service.AuthorMapper;
@@ -22,14 +22,13 @@ import static com.mjc.school.service.exceptions.ServiceErrorCode.NEWS_ID_DOES_NO
 @Service
 public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoResponse,Long> {
 
-    private final BaseRepository<Author,Long> authorRepository;
+    private final AuthorRepository authorRepository;
     private final BaseRepository<News,Long> newsRepository;
     private final AuthorMapper authorMapper;
 
-    private final AuthorRepository ar = new AuthorRepository();
 
     @Autowired
-    public AuthorService(BaseRepository<Author,Long> authorRepository,BaseRepository<News,Long> newsRepository, AuthorMapper authorMapper) {
+    public AuthorService(AuthorRepository authorRepository,BaseRepository<News,Long> newsRepository, AuthorMapper authorMapper) {
         this.authorRepository = authorRepository;
         this.authorMapper = authorMapper;
         this.newsRepository = newsRepository;
@@ -82,7 +81,7 @@ public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoRes
     @Transactional(readOnly = true)
     public AuthorDtoResponse findAuthorByNewsId(Long id){
         if(newsRepository.readById(id).isPresent()){
-            Author author = ar.findAuthorByNewsId(id);
+            Author author = authorRepository.findAuthorByNewsId(id);
             return authorMapper.modelToDto(author);
         } else {
             throw new NotFoundException(String.format(NEWS_ID_DOES_NOT_EXIST.getMessage(), id));

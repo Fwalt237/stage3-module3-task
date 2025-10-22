@@ -1,7 +1,7 @@
 package com.mjc.school.service;
 
-import com.mjc.school.repository.impl.NewsRepository;
-import com.mjc.school.repository.impl.TagRepository;
+import com.mjc.school.repository.impl.NewsRepositoryImpl;
+import com.mjc.school.repository.impl.TagRepositoryImpl;
 import com.mjc.school.repository.model.News;
 import com.mjc.school.repository.model.Tag;
 import com.mjc.school.service.dto.TagDtoRequest;
@@ -23,8 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class TagServiceTest {
 
      private TagService tagService;
-     private TagRepository tagRepository;
-     private NewsRepository newsRepository;
+     private TagRepositoryImpl tagRepositoryImpl;
+     private NewsRepositoryImpl newsRepositoryImpl;
 
     private Tag testTag;
     private News testNews;
@@ -34,13 +34,13 @@ class TagServiceTest {
     void setUp() {
         testTag = new Tag();
         testTag.setName("Sports");
-        testTag = tagRepository.create(testTag);
+        testTag = tagRepositoryImpl.create(testTag);
 
         testNews = new News();
         testNews.setTitle("News");
         testNews.setContent("Content");
         testNews.setTagsFromNews(Set.of(testTag));
-        testNews = newsRepository.create(testNews);
+        testNews = newsRepositoryImpl.create(testNews);
     }
 
     @Test
@@ -64,7 +64,7 @@ class TagServiceTest {
         TagDtoResponse result = tagService.create(request);
         assertThat(result).isNotNull();
         assertThat(result.name()).isEqualTo("Tech");
-        assertThat(tagRepository.readById(result.tagId())).isPresent();
+        assertThat(tagRepositoryImpl.readById(result.tagId())).isPresent();
     }
 
     @Test
@@ -80,7 +80,7 @@ class TagServiceTest {
     void testDeleteById() {
         boolean deleted = tagService.deleteById(testTag.getId());
         assertThat(deleted).isTrue();
-        assertThat(tagRepository.readById(testTag.getId())).isEmpty();
+        assertThat(tagRepositoryImpl.readById(testTag.getId())).isEmpty();
     }
 
     @Test

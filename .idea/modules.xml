@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/stage3-module3-task.iml" filepath="$PROJECT_DIR$/.idea/stage3-module3-task.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-main/stage3-module3-task.module-main.main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-main/stage3-module3-task.module-main.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-repository/stage3-module3-task.module-repository.iml" filepath="$PROJECT_DIR$/.idea/modules/module-repository/stage3-module3-task.module-repository.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-repository/stage3-module3-task.module-repository.main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-repository/stage3-module3-task.module-repository.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-repository/stage3-module3-task.module-repository.test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-repository/stage3-module3-task.module-repository.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-service/stage3-module3-task.module-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-service/stage3-module3-task.module-service.main.iml" />

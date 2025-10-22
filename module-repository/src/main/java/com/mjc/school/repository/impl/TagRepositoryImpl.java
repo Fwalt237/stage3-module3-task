@@ -1,6 +1,6 @@
 package com.mjc.school.repository.impl;
 
-import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.TagRepository;
 import com.mjc.school.repository.model.Tag;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class TagRepository implements BaseRepository<Tag,Long> {
+public class TagRepositoryImpl implements TagRepository {
 
     @PersistenceContext
     private EntityManager entityManager;

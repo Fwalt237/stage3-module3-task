@@ -1,7 +1,7 @@
 package com.mjc.school.repository;
-import com.mjc.school.repository.impl.AuthorRepository;
-import com.mjc.school.repository.impl.NewsRepository;
-import com.mjc.school.repository.impl.TagRepository;
+import com.mjc.school.repository.impl.AuthorRepositoryImpl;
+import com.mjc.school.repository.impl.NewsRepositoryImpl;
+import com.mjc.school.repository.impl.TagRepositoryImpl;
 import com.mjc.school.repository.model.Author;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +25,13 @@ public class BaseRepositoryTest {
     private List<BaseRepository<?, Long>> repositories;
 
 
-    private AuthorRepository authorRepository;
+    private AuthorRepositoryImpl authorRepositoryImpl;
 
 
-    private NewsRepository newsRepository;
+    private NewsRepositoryImpl newsRepositoryImpl;
 
 
-    private TagRepository tagRepository;
+    private TagRepositoryImpl tagRepositoryImpl;
 
     @Test
     @Order(1)
@@ -73,9 +73,9 @@ public class BaseRepositoryTest {
     void testAuthorRepositoryCreateAndRead() {
         Author author = new Author();
         author.setName("Test Author");
-        Author saved = authorRepository.create(author);
+        Author saved = authorRepositoryImpl.create(author);
         assertThat(saved).isNotNull();
         assertThat(saved.getId()).isNotNull();
-        assertThat(authorRepository.readById(saved.getId())).isPresent();
+        assertThat(authorRepositoryImpl.readById(saved.getId())).isPresent();
     }
 }

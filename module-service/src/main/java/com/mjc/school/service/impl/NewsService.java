@@ -1,7 +1,7 @@
 package com.mjc.school.service.impl;
 
 import com.mjc.school.repository.BaseRepository;
-import com.mjc.school.repository.impl.NewsRepository;
+import com.mjc.school.repository.NewsRepository;
 import com.mjc.school.repository.model.Author;
 import com.mjc.school.repository.model.News;
 import com.mjc.school.repository.model.Tag;
@@ -21,15 +21,14 @@ import static com.mjc.school.service.exceptions.ServiceErrorCode.NEWS_ID_DOES_NO
 
 @Service
 public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse, Long> {
-    private final BaseRepository<News,Long> newsRepository;
+    private final NewsRepository newsRepository;
     private final NewsMapper newsMapper;
     private final BaseRepository<Author,Long> authorRepository;
     private final BaseRepository<Tag,Long> tagRepository;
 
-    private final NewsRepository nr = new NewsRepository();
 
     @Autowired
-    public NewsService(BaseRepository<News,Long> newsRepository, NewsMapper newsMapper, BaseRepository<Author,Long>authorRepository, BaseRepository<Tag,Long> tagRepository) {
+    public NewsService(NewsRepository  newsRepository, NewsMapper newsMapper, BaseRepository<Author,Long>authorRepository, BaseRepository<Tag,Long> tagRepository) {
         this.newsRepository = newsRepository;
         this.newsMapper = newsMapper;
         this.authorRepository = authorRepository;
@@ -84,7 +83,7 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
                                                   List<Long> tagIds, String authorName,
                                                   String title, String content){
 
-        List<News> news = nr.findNewsByParams(tagNames, tagIds, authorName, title, content);
+        List<News> news = newsRepository .findNewsByParams(tagNames, tagIds, authorName, title, content);
         if(!news.isEmpty()){
             return newsMapper.modelListToDtoList(news);
         }else{

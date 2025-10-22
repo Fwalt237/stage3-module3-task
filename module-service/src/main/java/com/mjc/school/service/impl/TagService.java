@@ -1,7 +1,7 @@
 package com.mjc.school.service.impl;
 
 import com.mjc.school.repository.BaseRepository;
-import com.mjc.school.repository.impl.TagRepository;
+import com.mjc.school.repository.TagRepository;
 import com.mjc.school.repository.model.News;
 import com.mjc.school.repository.model.Tag;
 import com.mjc.school.service.BaseService;
@@ -22,14 +22,13 @@ import static com.mjc.school.service.exceptions.ServiceErrorCode.TAG_ID_DOES_NOT
 @Service
 public class TagService implements BaseService<TagDtoRequest, TagDtoResponse, Long> {
 
-    private final BaseRepository<Tag,Long> tagRepository;
+    private final TagRepository tagRepository;
     private final TagMapper tagMapper;
     private final BaseRepository<News,Long> newsRepository;
 
-    private final TagRepository tr = new TagRepository();
 
     @Autowired
-    public TagService(BaseRepository<Tag,Long> tagRepository, TagMapper tagMapper, BaseRepository<News,Long> newsRepository) {
+    public TagService(TagRepository tagRepository, TagMapper tagMapper, BaseRepository<News,Long> newsRepository) {
         this.tagRepository = tagRepository;
         this.tagMapper = tagMapper;
         this.newsRepository = newsRepository;
@@ -81,7 +80,7 @@ public class TagService implements BaseService<TagDtoRequest, TagDtoResponse, Lo
     @Transactional(readOnly = true)
     public List<TagDtoResponse> findTagsByNewsId(Long id) {
         if(newsRepository.readById(id).isPresent()) {
-            List<Tag> tags = tr.findTagsByNewsId(id);
+            List<Tag> tags = tagRepository.findTagsByNewsId(id);
             return tagMapper.modelListToDtoList(tags);
         }else{
             throw new NotFoundException(String.format(NEWS_ID_DOES_NOT_EXIST.getMessage(), id));

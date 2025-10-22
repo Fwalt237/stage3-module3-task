@@ -1,7 +1,7 @@
 package com.mjc.school.service;
 
-import com.mjc.school.repository.impl.AuthorRepository;
-import com.mjc.school.repository.impl.NewsRepository;
+import com.mjc.school.repository.impl.AuthorRepositoryImpl;
+import com.mjc.school.repository.impl.NewsRepositoryImpl;
 import com.mjc.school.repository.model.Author;
 import com.mjc.school.repository.model.News;
 import com.mjc.school.service.dto.AuthorDtoRequest;
@@ -10,7 +10,6 @@ import com.mjc.school.service.exceptions.NotFoundException;
 import com.mjc.school.service.impl.AuthorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class AuthorServiceTest {
 
      private AuthorService authorService ;
-     private AuthorRepository authorRepository;
-     private NewsRepository newsRepository;
+     private AuthorRepositoryImpl authorRepositoryImpl;
+     private NewsRepositoryImpl newsRepositoryImpl;
 
     private Author testAuthor;
     private News testNews;
@@ -34,13 +33,13 @@ class AuthorServiceTest {
     void setUp() {
         testAuthor = new Author();
         testAuthor.setName("Jane Doe");
-        testAuthor = authorRepository.create(testAuthor);
+        testAuthor = authorRepositoryImpl.create(testAuthor);
 
         testNews = new News();
         testNews.setTitle("Test News");
         testNews.setContent("Content");
         testNews.setAuthor(testAuthor);
-        testNews = newsRepository.create(testNews);
+        testNews = newsRepositoryImpl.create(testNews);
     }
 
     @Test
@@ -64,7 +63,7 @@ class AuthorServiceTest {
         AuthorDtoResponse result = authorService.create(request);
         assertThat(result).isNotNull();
         assertThat(result.name()).isEqualTo("John Smith");
-        assertThat(authorRepository.readById(result.authorId())).isPresent();
+        assertThat(authorRepositoryImpl.readById(result.authorId())).isPresent();
     }
 
     @Test
@@ -80,7 +79,7 @@ class AuthorServiceTest {
     void testDeleteById() {
         boolean deleted = authorService.deleteById(testAuthor.getId());
         assertThat(deleted).isTrue();
-        assertThat(authorRepository.readById(testAuthor.getId())).isEmpty();
+        assertThat(authorRepositoryImpl.readById(testAuthor.getId())).isEmpty();
     }
 
     @Test
