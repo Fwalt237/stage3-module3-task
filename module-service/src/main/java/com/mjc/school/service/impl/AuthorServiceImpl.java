@@ -5,7 +5,7 @@ import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.Author;
 import com.mjc.school.repository.model.News;
 import com.mjc.school.service.AuthorMapper;
-import com.mjc.school.service.BaseService;
+import com.mjc.school.service.AuthorService;
 import com.mjc.school.service.dto.AuthorDtoRequest;
 import com.mjc.school.service.dto.AuthorDtoResponse;
 import com.mjc.school.service.exceptions.NotFoundException;
@@ -20,7 +20,7 @@ import static com.mjc.school.service.exceptions.ServiceErrorCode.AUTHOR_ID_DOES_
 import static com.mjc.school.service.exceptions.ServiceErrorCode.NEWS_ID_DOES_NOT_EXIST;
 
 @Service
-public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoResponse,Long> {
+public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
     private final BaseRepository<News,Long> newsRepository;
@@ -28,7 +28,7 @@ public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoRes
 
 
     @Autowired
-    public AuthorService(AuthorRepository authorRepository,BaseRepository<News,Long> newsRepository, AuthorMapper authorMapper) {
+    public AuthorServiceImpl(AuthorRepository authorRepository, BaseRepository<News,Long> newsRepository, AuthorMapper authorMapper) {
         this.authorRepository = authorRepository;
         this.authorMapper = authorMapper;
         this.newsRepository = newsRepository;

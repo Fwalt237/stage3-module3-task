@@ -7,7 +7,7 @@ import com.mjc.school.repository.model.News;
 import com.mjc.school.service.dto.AuthorDtoRequest;
 import com.mjc.school.service.dto.AuthorDtoResponse;
 import com.mjc.school.service.exceptions.NotFoundException;
-import com.mjc.school.service.impl.AuthorService;
+import com.mjc.school.service.impl.AuthorServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,9 +19,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-class AuthorServiceTest {
+class AuthorServiceImplTest {
 
-     private AuthorService authorService ;
+     private AuthorServiceImpl authorServiceImpl;
      private AuthorRepositoryImpl authorRepositoryImpl;
      private NewsRepositoryImpl newsRepositoryImpl;
 
@@ -44,14 +44,14 @@ class AuthorServiceTest {
 
     @Test
     void testReadAll() {
-        List<AuthorDtoResponse> result = authorService.readAll();
+        List<AuthorDtoResponse> result = authorServiceImpl.readAll();
         assertThat(result).isNotEmpty();
         assertThat(result).anyMatch(dto -> dto.name().equals("Jane Doe"));
     }
 
     @Test
     void testReadById() {
-        AuthorDtoResponse result = authorService.readById(testAuthor.getId());
+        AuthorDtoResponse result = authorServiceImpl.readById(testAuthor.getId());
         assertThat(result).isNotNull();
         assertThat(result.authorId()).isEqualTo(testAuthor.getId());
         assertThat(result.name()).isEqualTo("Jane Doe");
@@ -60,7 +60,7 @@ class AuthorServiceTest {
     @Test
     void testCreate() {
         AuthorDtoRequest request = new AuthorDtoRequest(null, "John Smith");
-        AuthorDtoResponse result = authorService.create(request);
+        AuthorDtoResponse result = authorServiceImpl.create(request);
         assertThat(result).isNotNull();
         assertThat(result.name()).isEqualTo("John Smith");
         assertThat(authorRepositoryImpl.readById(result.authorId())).isPresent();
@@ -69,7 +69,7 @@ class AuthorServiceTest {
     @Test
     void testUpdate() {
         AuthorDtoRequest request = new AuthorDtoRequest(testAuthor.getId(), "Jane Updated");
-        AuthorDtoResponse result = authorService.update(request);
+        AuthorDtoResponse result = authorServiceImpl.update(request);
         assertThat(result).isNotNull();
         assertThat(result.authorId()).isEqualTo(testAuthor.getId());
         assertThat(result.name()).isEqualTo("Jane Updated");
@@ -77,14 +77,14 @@ class AuthorServiceTest {
 
     @Test
     void testDeleteById() {
-        boolean deleted = authorService.deleteById(testAuthor.getId());
+        boolean deleted = authorServiceImpl.deleteById(testAuthor.getId());
         assertThat(deleted).isTrue();
         assertThat(authorRepositoryImpl.readById(testAuthor.getId())).isEmpty();
     }
 
     @Test
     void testFindAuthorByNewsId() {
-        AuthorDtoResponse result = authorService.findAuthorByNewsId(testNews.getId());
+        AuthorDtoResponse result = authorServiceImpl.findAuthorByNewsId(testNews.getId());
         assertThat(result).isNotNull();
         assertThat(result.authorId()).isEqualTo(testAuthor.getId());
         assertThat(result.name()).isEqualTo("Jane Doe");
@@ -92,6 +92,6 @@ class AuthorServiceTest {
 
     @Test
     void testFindAuthorByNewsIdNotFound() {
-        assertThrows(NotFoundException.class, () -> authorService.findAuthorByNewsId(999L));
+        assertThrows(NotFoundException.class, () -> authorServiceImpl.findAuthorByNewsId(999L));
     }
 }

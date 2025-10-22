@@ -5,8 +5,8 @@ import com.mjc.school.repository.NewsRepository;
 import com.mjc.school.repository.model.Author;
 import com.mjc.school.repository.model.News;
 import com.mjc.school.repository.model.Tag;
-import com.mjc.school.service.BaseService;
 import com.mjc.school.service.NewsMapper;
+import com.mjc.school.service.NewsService;
 import com.mjc.school.service.dto.NewsDtoRequest;
 import com.mjc.school.service.dto.NewsDtoResponse;
 import com.mjc.school.service.exceptions.NotFoundException;
@@ -20,7 +20,7 @@ import java.util.List;
 import static com.mjc.school.service.exceptions.ServiceErrorCode.NEWS_ID_DOES_NOT_EXIST;
 
 @Service
-public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse, Long> {
+public class NewsServiceImpl implements NewsService {
     private final NewsRepository newsRepository;
     private final NewsMapper newsMapper;
     private final BaseRepository<Author,Long> authorRepository;
@@ -28,7 +28,7 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
 
 
     @Autowired
-    public NewsService(NewsRepository  newsRepository, NewsMapper newsMapper, BaseRepository<Author,Long>authorRepository, BaseRepository<Tag,Long> tagRepository) {
+    public NewsServiceImpl(NewsRepository  newsRepository, NewsMapper newsMapper, BaseRepository<Author,Long>authorRepository, BaseRepository<Tag,Long> tagRepository) {
         this.newsRepository = newsRepository;
         this.newsMapper = newsMapper;
         this.authorRepository = authorRepository;

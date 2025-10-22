@@ -10,7 +10,7 @@ import com.mjc.school.service.dto.NewsDtoRequest;
 import com.mjc.school.service.dto.NewsDtoResponse;
 import com.mjc.school.service.dto.TagDtoResponse;
 import com.mjc.school.service.exceptions.NotFoundException;
-import com.mjc.school.service.impl.NewsService;
+import com.mjc.school.service.impl.NewsServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,10 +23,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-class NewsServiceTest {
+class NewsServiceImplTest {
 
 
-    private NewsService newsService;
+    private NewsServiceImpl newsServiceImpl;
     private NewsRepositoryImpl newsRepositoryImpl;
     private AuthorRepositoryImpl authorRepositoryImpl;
     private TagRepositoryImpl tagRepositoryImpl;
@@ -56,14 +56,14 @@ class NewsServiceTest {
 
     @Test
     void testReadAll() {
-        List<NewsDtoResponse> result = newsService.readAll();
+        List<NewsDtoResponse> result = newsServiceImpl.readAll();
         assertThat(result).isNotEmpty();
         assertThat(result).anyMatch(dto -> dto.title().equals("Test News"));
     }
 
     @Test
     void testReadById() {
-        NewsDtoResponse result = newsService.readById(testNews.getId());
+        NewsDtoResponse result = newsServiceImpl.readById(testNews.getId());
         assertThat(result).isNotNull();
         assertThat(result.newsId()).isEqualTo(testNews.getId());
         assertThat(result.title()).isEqualTo("Test News");
@@ -75,7 +75,7 @@ class NewsServiceTest {
     void testCreate() {
         NewsDtoRequest request = new NewsDtoRequest(null, "New News", "New Content",
                 testAuthor.getId(), Set.of(testTag.getId()));
-        NewsDtoResponse result = newsService.create(request);
+        NewsDtoResponse result = newsServiceImpl.create(request);
         assertThat(result).isNotNull();
         assertThat(result.title()).isEqualTo("New News");
         assertThat(result.author().authorId()).isEqualTo(testAuthor.getId());
@@ -87,7 +87,7 @@ class NewsServiceTest {
     void testUpdate() {
         NewsDtoRequest request = new NewsDtoRequest(testNews.getId(), "Updated News", "Updated Content",
                 testAuthor.getId(), Set.of(testTag.getId()));
-        NewsDtoResponse result = newsService.update(request);
+        NewsDtoResponse result = newsServiceImpl.update(request);
         assertThat(result).isNotNull();
         assertThat(result.newsId()).isEqualTo(testNews.getId());
         assertThat(result.title()).isEqualTo("Updated News");
@@ -96,14 +96,14 @@ class NewsServiceTest {
 
     @Test
     void testDeleteById() {
-        boolean deleted = newsService.deleteById(testNews.getId());
+        boolean deleted = newsServiceImpl.deleteById(testNews.getId());
         assertThat(deleted).isTrue();
         assertThat(newsRepositoryImpl.readById(testNews.getId())).isEmpty();
     }
 
     @Test
     void testFindNewsByParams() {
-        List<NewsDtoResponse> result = newsService.findNewsByParams(
+        List<NewsDtoResponse> result = newsServiceImpl.findNewsByParams(
                 List.of("Tech"), null, "John", "Test", "Content");
         assertThat(result).isNotEmpty();
         assertThat(result.get(0).newsId()).isEqualTo(testNews.getId());
@@ -114,6 +114,6 @@ class NewsServiceTest {
     @Test
     void testFindNewsByParamsNotFound() {
         assertThrows(NotFoundException.class, () ->
-                newsService.findNewsByParams(List.of("Nonexistent"), null, null, null, null));
+                newsServiceImpl.findNewsByParams(List.of("Nonexistent"), null, null, null, null));
     }
 }

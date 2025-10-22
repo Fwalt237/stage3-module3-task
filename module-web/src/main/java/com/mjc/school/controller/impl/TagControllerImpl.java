@@ -1,24 +1,24 @@
 package com.mjc.school.controller.impl;
 
-import com.mjc.school.controller.BaseController;
+import com.mjc.school.controller.TagController;
 import com.mjc.school.controller.annotation.CommandBody;
 import com.mjc.school.controller.annotation.CommandHandler;
 import com.mjc.school.controller.annotation.CommandParam;
+import com.mjc.school.service.TagService;
 import com.mjc.school.service.dto.TagDtoRequest;
 import com.mjc.school.service.dto.TagDtoResponse;
-import com.mjc.school.service.impl.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
 @Controller
-public class TagController implements BaseController<TagDtoRequest, TagDtoResponse, Long> {
+public class TagControllerImpl implements TagController {
 
     private final TagService tagService;
 
     @Autowired
-    public TagController(TagService tagService) {
+    public TagControllerImpl(TagService tagService) {
         this.tagService = tagService;
     }
 

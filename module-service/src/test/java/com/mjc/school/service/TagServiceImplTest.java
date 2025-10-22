@@ -7,7 +7,7 @@ import com.mjc.school.repository.model.Tag;
 import com.mjc.school.service.dto.TagDtoRequest;
 import com.mjc.school.service.dto.TagDtoResponse;
 import com.mjc.school.service.exceptions.NotFoundException;
-import com.mjc.school.service.impl.TagService;
+import com.mjc.school.service.impl.TagServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,9 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-class TagServiceTest {
+class TagServiceImplTest {
 
-     private TagService tagService;
+     private TagServiceImpl tagServiceImpl;
      private TagRepositoryImpl tagRepositoryImpl;
      private NewsRepositoryImpl newsRepositoryImpl;
 
@@ -45,14 +45,14 @@ class TagServiceTest {
 
     @Test
     void testReadAll() {
-        List<TagDtoResponse> result = tagService.readAll();
+        List<TagDtoResponse> result = tagServiceImpl.readAll();
         assertThat(result).isNotEmpty();
         assertThat(result).anyMatch(dto -> dto.name().equals("Sports"));
     }
 
     @Test
     void testReadById() {
-        TagDtoResponse result = tagService.readById(testTag.getId());
+        TagDtoResponse result = tagServiceImpl.readById(testTag.getId());
         assertThat(result).isNotNull();
         assertThat(result.tagId()).isEqualTo(testTag.getId());
         assertThat(result.name()).isEqualTo("Sports");
@@ -61,7 +61,7 @@ class TagServiceTest {
     @Test
     void testCreate() {
         TagDtoRequest request = new TagDtoRequest(null, "Tech");
-        TagDtoResponse result = tagService.create(request);
+        TagDtoResponse result = tagServiceImpl.create(request);
         assertThat(result).isNotNull();
         assertThat(result.name()).isEqualTo("Tech");
         assertThat(tagRepositoryImpl.readById(result.tagId())).isPresent();
@@ -70,7 +70,7 @@ class TagServiceTest {
     @Test
     void testUpdate() {
         TagDtoRequest request = new TagDtoRequest(testTag.getId(), "Updated Sports");
-        TagDtoResponse result = tagService.update(request);
+        TagDtoResponse result = tagServiceImpl.update(request);
         assertThat(result).isNotNull();
         assertThat(result.tagId()).isEqualTo(testTag.getId());
         assertThat(result.name()).isEqualTo("Updated Sports");
@@ -78,20 +78,20 @@ class TagServiceTest {
 
     @Test
     void testDeleteById() {
-        boolean deleted = tagService.deleteById(testTag.getId());
+        boolean deleted = tagServiceImpl.deleteById(testTag.getId());
         assertThat(deleted).isTrue();
         assertThat(tagRepositoryImpl.readById(testTag.getId())).isEmpty();
     }
 
     @Test
     void testFindTagsByNewsId() {
-        List<TagDtoResponse> result = tagService.findTagsByNewsId(testNews.getId());
+        List<TagDtoResponse> result = tagServiceImpl.findTagsByNewsId(testNews.getId());
         assertThat(result).hasSize(1);
         assertThat(result.get(0).name()).isEqualTo("Sports");
     }
 
     @Test
     void testFindTagsByNewsIdNotFound() {
-        assertThrows(NotFoundException.class, () -> tagService.findTagsByNewsId(999L));
+        assertThrows(NotFoundException.class, () -> tagServiceImpl.findTagsByNewsId(999L));
     }
 }

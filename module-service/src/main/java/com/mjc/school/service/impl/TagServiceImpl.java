@@ -4,8 +4,8 @@ import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.TagRepository;
 import com.mjc.school.repository.model.News;
 import com.mjc.school.repository.model.Tag;
-import com.mjc.school.service.BaseService;
 import com.mjc.school.service.TagMapper;
+import com.mjc.school.service.TagService;
 import com.mjc.school.service.dto.TagDtoRequest;
 import com.mjc.school.service.dto.TagDtoResponse;
 import com.mjc.school.service.exceptions.NotFoundException;
@@ -20,7 +20,7 @@ import static com.mjc.school.service.exceptions.ServiceErrorCode.NEWS_ID_DOES_NO
 import static com.mjc.school.service.exceptions.ServiceErrorCode.TAG_ID_DOES_NOT_EXIST;
 
 @Service
-public class TagService implements BaseService<TagDtoRequest, TagDtoResponse, Long> {
+public class TagServiceImpl implements TagService {
 
     private final TagRepository tagRepository;
     private final TagMapper tagMapper;
@@ -28,7 +28,7 @@ public class TagService implements BaseService<TagDtoRequest, TagDtoResponse, Lo
 
 
     @Autowired
-    public TagService(TagRepository tagRepository, TagMapper tagMapper, BaseRepository<News,Long> newsRepository) {
+    public TagServiceImpl(TagRepository tagRepository, TagMapper tagMapper, BaseRepository<News,Long> newsRepository) {
         this.tagRepository = tagRepository;
         this.tagMapper = tagMapper;
         this.newsRepository = newsRepository;
